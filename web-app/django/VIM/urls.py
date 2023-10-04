@@ -15,10 +15,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.conf import settings
 from VIM.apps.instruments.views.instrument_list import InstrumentList
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("instruments/", InstrumentList.as_view(), name="instrument-list"),
 ]
+
+
+if settings.IS_DEVELOPMENT:
+    urlpatterns += [path("__debug__/", include("debug_toolbar.urls"))]
